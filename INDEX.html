@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday!</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    background:linear-gradient(135deg,#ff758c,#ff7eb3,#7afcff);
+}
+
+.container{
+    text-align:center;
+    color:white;
+    padding:20px;
+    z-index:10;
+}
+
+h1{
+    font-size:3rem;
+    animation:float 3s ease-in-out infinite;
+    text-shadow:0 0 20px rgba(255,255,255,0.8);
+}
+
+h2{
+    margin-top:10px;
+    font-size:1.5rem;
+}
+
+p{
+    margin-top:20px;
+    font-size:1.1rem;
+    max-width:600px;
+    line-height:1.6;
+}
+
+.card{
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(10px);
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.2);
+}
+
+.cake{
+    font-size:80px;
+    margin:20px 0;
+    animation:bounce 2s infinite;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-12px);}
+}
+
+@keyframes bounce{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-15px);}
+}
+
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    pointer-events:none;
+}
+
+/* Mobile */
+@media(max-width:768px){
+    h1{
+        font-size:2.2rem;
+    }
+
+    h2{
+        font-size:1.2rem;
+    }
+
+    p{
+        font-size:1rem;
+    }
+
+    .cake{
+        font-size:60px;
+    }
+
+    .card{
+        padding:20px;
+        margin:15px;
+    }
+}
+</style>
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="container">
+    <div class="card">
+        <h1>🎉 Happy Birthday! 🎉</h1>
+
+        <div class="cake">🎂</div>
+
+        <h2>Dear AMMA,</h2>
+
+        
+         <p>
+    Happy Birthday Amma ❤️
+
+    <br><br>
+
+    Love you so much. I am forever grateful for everything you have done for me, and it means a lot. Thank you for your endless love, care, sacrifices, and support throughout my life.
+
+    <br><br>
+
+    Happy Birthday, Amma. 🎂🎉❤️
+
+        </p>
+    </div>
+</div>
+
+<script>
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const pieces = [];
+
+for(let i=0;i<200;i++){
+    pieces.push({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height,
+        size:Math.random()*10+5,
+        speed:Math.random()*3+1,
+        color:`hsl(${Math.random()*360},100%,50%)`,
+        tilt:Math.random()*10-5
+    });
+}
+
+function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    pieces.forEach(p=>{
+        ctx.beginPath();
+        ctx.fillStyle=p.color;
+        ctx.fillRect(p.x,p.y,p.size,p.size);
+    });
+
+    update();
+    requestAnimationFrame(draw);
+}
+
+function update(){
+    pieces.forEach(p=>{
+        p.y += p.speed;
+        p.x += Math.sin(p.y*0.01);
+
+        if(p.y > canvas.height){
+            p.y = -20;
+            p.x = Math.random()*canvas.width;
+        }
+    });
+}
+
+draw();
+
+window.addEventListener("resize",()=>{
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+});
+</script>
+
+</body>
+</html>
